@@ -25,12 +25,18 @@ func main() {
 }
 
 func getUsers(w http.ResponseWriter, r *http.Request) {
-	json.NewEncoder(w).Encode(users)
+	err := json.NewEncoder(w).Encode(users)
+	if err != nil {
+		return
+	}
 }
 
 func createUser(w http.ResponseWriter, r *http.Request) {
 	var newUser User
 	_ = json.NewDecoder(r.Body).Decode(&newUser)
 	users = append(users, newUser)
-	json.NewEncoder(w).Encode(newUser)
+	err := json.NewEncoder(w).Encode(newUser)
+	if err != nil {
+		return
+	}
 }
